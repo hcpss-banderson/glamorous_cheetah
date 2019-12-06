@@ -1,0 +1,24 @@
+{% extends 'card/card.html.twig' %}
+
+{% block card_name %}{{ department.name }}{% endblock %}
+
+{% block card_body %}
+    <p>
+        Main phone: 
+        {% if department.phone != null %}
+            {{ department.phone }}
+        {% else %}
+            410-313-6600
+        {% endif %}
+    </p>
+        
+    <p>
+        <strong>Location:</strong>
+        <a href="https://maps.google.com/?q={{ department.location.address|url_encode }}">
+            {{ department.location.name }} 
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+        </a>
+    </p>
+        
+    <p><a href="{{ path('department_show', {'slug': department.slug}) }}">View all department staff</a></p>
+{% endblock %}

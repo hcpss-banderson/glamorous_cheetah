@@ -1,0 +1,50 @@
+---
+version: '2'
+services:
+      
+  graph:
+    image: neo4j
+    container_name: directory_graph
+    restart: always
+    volumes:
+      - ./.node:/data
+    ports:
+      - 7474:7474
+      - 7687:7687
+    environment:
+      NEO4J_AUTH: none
+
+  mongo:
+    image: mongo
+    container_name: directory_mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: symfony
+    volumes:
+      - ./.mongo:/data/db
+
+  mongo-express:
+    image: mongo-express
+    container_name: directory_express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+
+  web:
+    image: glamorous_cheetah
+    build:
+      context: .
+      dockerfile: ./docker/web/Dockerfile
+    container_name: directory_web
+    restart: always
+    volumes:
+      - ./symfony:/var/www/symfony
+    ports:
+      - 9090:80
+    environment:
+      APP_ENV: dev

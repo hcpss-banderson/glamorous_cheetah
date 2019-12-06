@@ -1,0 +1,8 @@
+<div class="dir-search__entry{% if grey is defined and grey %} grey{% endif %}">
+    <div class="dir-search__entry--name">
+        <h3><strong>{% block card_name %}{% endblock %}</strong></h3>
+        <div class="dir-search__entry--contact">
+            {% block card_body %}{% endblock %}
+        </div>    
+    </div>
+</div>

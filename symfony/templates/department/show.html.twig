@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="hero-heading">
+		<h1>{{ department.name }}</h1>
+	</div>
+
+	<section class="contents">
+		<div class="col-left">
+			{% if department.parent %}
+    			<p>
+    				<a href="{{ path('department_show', { 'slug': department.parent.slug }) }}">
+    					&uarr; Up to {{ department.parent.name }}
+    				</a>
+    			</p>
+    		{% else %}
+    			<p>
+    				<a href="{{ path('department_list') }}">
+    					&larr; Back to department listing
+    				</a>
+    			</p>
+			{% endif %}
+		</div>
+		<div class="col-right">
+			<p style="float:right;">
+				<a href="http://www.hcpss.org/f/aboutus/orgcharts.pdf">
+					View the HCPSS Organizational Charts
+				</a> 
+				<i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+			</p>
+		</div>
+	</section>
+	
+	<div id="render-cards">	
+		{{ render(controller('App\\Controller\\CardController::employee', {
+		    employee: department.head.employee,
+		    context: department,
+		    primary: true
+		})) }}
+	
+		{#
+    	{{ include('card/person.html.twig', {
+    		'grey': true, 
+    		'person': department.head.employee,
+    		'context': department,
+        }) }}
+        #}
+    	
+        {% for position in department.head.reports %}
+        	{{ render(controller('App\\Controller\\CardController::employee', {
+        	    employee: position.employee,
+        	    context: department
+        	})) }}
+        
+        	{#        
+            {{ include('card/person.html.twig', {
+            	'grey': false, 
+            	'person': position.employee,
+            	'context': department,
+            }) }}
+            #}
+        {% endfor %}
+    </div>
+    
+    {% if department.children is not empty %}
+    	<p><strong>Sub departments:</strong>
+        	{% for related in department.children %}
+        		{% if not loop.first %}|{% endif %}
+        		<a href="{{ path('department_show', {'slug': related.slug}) }}">
+        		    {{ related.name|replace({' ': '&nbsp;'})|raw }}
+        		</a>
+        	{% endfor %}
+    	</p>
+    {% endif %}
+{% endblock %}

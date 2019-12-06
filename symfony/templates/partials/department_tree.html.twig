@@ -1,0 +1,13 @@
+<li>
+	<a href="{{ path('department_show', { 'slug': department.slug }) }}">
+	    {{ department.name }}
+	</a>
+		
+	{% if department.children|length > 0 %}
+		<ul >
+    	{% for child in department.children %}
+    	    {{ include('partials/department_tree.html.twig', { 'department': child }) }}
+    	{% endfor %}
+    	</ul>
+	{% endif %}
+</li>

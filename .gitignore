@@ -1,0 +1,8 @@
+/symfony.sql
+/.env
+/.data
+/.node
+/.mongo
+.buildpath
+.project
+.settings

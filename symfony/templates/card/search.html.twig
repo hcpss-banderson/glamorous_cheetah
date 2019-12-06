@@ -1,0 +1,33 @@
+<div class="dir-search__entry"
+	style="background-color:#{% if person.weight < 0 %}f2f2f2{% else %}ffffff{% endif %}"
+>
+	<div class="dir-search__entry--name">
+    	<h3><strong>{{ person.firstName }} {{ person.lastName }}</strong></h3>
+    </div>
+    
+    <div class="dir-search__entry--contact">
+      	<p>
+      	{% for department in person.departments %}
+      		<a href="{{ path('department_show', {'slug': department.slug}) }}">{{ department.name }}</a>
+      	{% endfor %}
+      	</p>
+
+      	<p><strong>Position:</strong> {{ person.position }}</p>
+      	
+        {% if person.email != null %}
+        	<p><strong>Email:</strong> <a href="mailto:{{ person.email }}">{{ person.email }}</a></p>
+        {% endif %}
+
+        {% if person.phone != null %}
+        	<p><strong>Phone:</strong> {{ person.phone }}</p>
+        {% endif %}
+
+        <p>
+        	<strong>Location:</strong>
+        	<a href="https://maps.google.com/?q={{ person.location.address|url_encode }}">
+        	    {{ person.location.name }} 
+        	    <i class="fa fa-map-marker" aria-hidden="true"></i>
+        	</a>
+        </p>
+    </div>
+</div>

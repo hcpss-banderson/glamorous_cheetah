@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}HCPSS Staff Departments - Staff Directory{% endblock %}
+
+{% block body %}
+	<div class="hero-heading">
+		<h1>HCPSS Departments</h1>
+	</div>
+
+	<p><a href="/">&larr; Return to search</a></p>
+	
+	<p class="tree">
+		<a href="{{ path('department_show', { 'slug': root.slug }) }}">
+	        {{ root.name }}
+		</a>
+	</p>
+	
+	<ul class="tree">
+		{% for child in root.children %}
+    	    {{ include('partials/department_tree.html.twig', { 'department': child }) }}
+    	{% endfor %}
+  	</ul>
+{% endblock %}

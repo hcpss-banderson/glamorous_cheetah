@@ -1,0 +1,8 @@
+{% if departments is not empty %}
+	<p><strong>Related departments:</strong>
+	{% for related in departments %}
+		{% if not loop.first %}|{% endif %}
+		<a href="{{ path('department_show', {'slug': related.slug}) }}">{{ related.name }}</a>
+	{% endfor %}
+	</p>
+{% endif %}

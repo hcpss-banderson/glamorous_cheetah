@@ -1,0 +1,46 @@
+{% extends 'card/card.html.twig' %}
+
+{% block card_name %}
+	{{ person.displayName }}
+{% endblock %}
+
+{% block card_body %}
+	<p>
+  	{% for position in person.positions %}
+  		{% if position.department %}
+  			<a href="{{ path('department_show', {'slug': position.department.slug}) }}">
+  			    {{ position.department.name }}
+  			</a><br>
+  		{% endif %}
+  	{% endfor %}
+  	</p>
+
+	<p><strong>Position:</strong>
+	{% for position in person.positions -%}	
+        {%- if not loop.first %}, {% endif %}{{ position.description }}
+	{%- endfor -%}
+	</p>
+
+    {% if person.email %}
+    	<p>
+    		<strong>Email:</strong> 
+    		<a href="mailto:{{ person.email }}">{{ person.email }}</a>
+    	</p>
+    {% endif %}
+
+    {% if person.phone %}
+    	<p><strong>Phone:</strong> {{ person.phone }}</p>
+    {% endif %}
+
+    <p>
+    	<strong>Location:</strong>
+        {{ person.positions.first.location.name }}
+    	
+    	{#
+    	<a href="https://maps.google.com/?q={{ person.location.address|url_encode }}">
+    	    {{ person.location.name }}
+    	    <i class="fa fa-map-marker" aria-hidden="true"></i>
+    	</a>
+    	#}
+    </p>
+{% endblock %}

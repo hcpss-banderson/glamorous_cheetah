@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        
+        {{ include('partials/icons.html.twig') }}
+        
+        <link rel="dns-prefetch" href="//ajax.googleapis.com">
+        <link rel="dns-prefetch" href="//www.hcpss.org">
+        <link rel="dns-prefetch" href="//s.w.org">
+        
+        <title>{% block title %}HCPSS Staff Directory{% endblock %}</title>
+        
+        {% block stylesheets %}
+        	<link rel="stylesheet" type="text/css" href="https://s3.amazonaws.com/hcpss.web.site/images/normalize.css">
+            <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:600,800">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+            <link rel="stylesheet" type="text/css" href="https://www.hcpss.org/f/mrb/newdesign/main.min.css">
+        	<link rel="stylesheet" href="{{ asset('css/main.min.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+    	<a href="#main-content">skip to main content</a>
+		{{ include('partials/header.html.twig') }}
+        
+        <div class="container page group">
+    		<main id="main-content">
+                {% block body %}{% endblock %}
+			</main>
+  		</div>
+        
+		{{ include('partials/footer.html.twig') }}
+    	
+        {% block javascripts %}
+        	<script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  			<script type='text/javascript' src='https://s3.amazonaws.com/hcpss.web.site/js/hcpss-2017-08-17.min.js?ver=4.9.2'></script>
+  			
+			{% if app.environment == 'prod' %}
+				{{ include('partials/google_analytics.html.twig') }}
+			{% endif %}
+
+			<script>
+  				sectionArrowToggle('#list p');
+			</script>
+        {% endblock %}
+    </body>
+</html>

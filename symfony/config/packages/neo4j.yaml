@@ -1,0 +1,5 @@
+neo4j:
+    connections:
+        default:
+            # dsn: '%env(resolve:NEO4J_DEFAULT_CONNECTION_DSN)%'
+            dsn: 'bolt://graph:7687'

@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% use 'form_div_layout.html.twig' with submit_widget as base_submit_widget %}
+
+{%- block submit_widget -%}
+    {%- set type = type|default('submit') -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- elseif label is same as(false) -%}
+            {% set translation_domain = false %}
+        {%- else -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}><i class="fa fa-search" aria-hidden="true"></i> {{ translation_domain is same as(false) ? label : label|trans(label_translation_parameters, translation_domain) }}</button>
+{%- endblock submit_widget -%}
+
+{% block body %}
+    <div class="hero-heading directory-heading">
+        <h1>Department of Education Staff&nbsp;Directory</h1>
+    </div>
+    
+    <p>Search below for Central Office staff contact information via name, 
+    department or phone number. The directory is updated weekly.</p>
+    
+    <p>Looking for school-based staff? Visit 
+    <a href="http://www.hcpss.org/schools/">school websites</a> for school 
+    staff contact information.</p>
+    
+    <section class="contents">
+    	<h2>Using our directory</h2>
+    	
+    	<p>Search for a full or partial name of an HCPSS staff member or department.</p>
+    	
+        {{ form_start(form) }}
+		<div class="contents dir-search__name--input">
+			<div class="search-field">
+				<strong>{{ form_label(form.query) }}</strong>
+			</div>
+			
+			{{ form_widget(form.query) }}
+			
+			<div class="search-field">
+				{{ form_row(form.search) }}
+			</div>
+		</div>
+		{{ form_end(form) }}
+		
+    </section>
+    
+    <section class="contents">
+        <p><strong>Looking for a department?</strong> See a 
+        <a href="{{ path('department_list') }}">list of all HCPSS departments</a> and their 
+        staff members. In addition, view our 
+        <a href="http://www.hcpss.org/f/aboutus/orgcharts.pdf">Organizational 
+        Charts</a> for a breakdown of the HCPSS staffing structure.</p>   
+    </section>
+    
+    {% if results is iterable %}
+    	{% for result in results %}
+    		{% if class(result) == 'Department' %}
+    			{{ include('card/department.html.twig', {'department': result}) }}
+    		{% elseif class(result) == 'Employee' %}
+    			{{ include('card/person.html.twig', {'person': result}) }}
+    		{% endif %}
+
+    	{% else %}
+    		<h3>No results found</h3>
+            <p>Can't find what you're looking for? Try our 
+            <a href='{{ path('department_list') }}'>full department listing</a> 
+            or call our main phone line, <strong>410-313-6600</strong> during 
+            normal business hours, 8:30 a.m. - 4:30 p.m.</p>
+    	{% endfor %}
+    {% endif %}
+{% endblock %}
