@@ -1,10 +1,10 @@
 ---
 version: '2'
 services:
-      
+
   graph:
     image: neo4j
-    container_name: sym_directory_graph
+    container_name: directory_graph
     restart: always
     volumes:
       - ./.node_data:/data
@@ -16,7 +16,7 @@ services:
       NEO4J_AUTH: ${NEO4J_AUTH_USERNAME}/${NEO4J_AUTH_PASSWORD}
 
   search:
-    container_name: sym_directory_search
+    container_name: directory_search
     image: elasticsearch:5
     ports:
       - 9200:9200
@@ -24,11 +24,11 @@ services:
       - discovery.type=single-node
 
   web:
-    image: sym_glamorous_cheetah
+    image: reg.hcpss.org/directory/web:glamorous_cheetah
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
-    container_name: sym_directory_web
+    container_name: directory_web
     restart: always
     volumes:
       - ./symfony:/var/www/symfony

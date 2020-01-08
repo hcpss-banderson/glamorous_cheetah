@@ -11,7 +11,7 @@ eight_points_guzzle:
             # Request options: http://docs.guzzlephp.org/en/stable/request-options.html
             options:
                 verify: false
-            
+
                 # timeout in seconds
                 timeout: 120
 
@@ -22,9 +22,9 @@ eight_points_guzzle:
                 # header field values.
                 headers:
                     User-Agent: "EightPointsGuzzleBundle/v7"
-                   
+
                 # Try not to overload the sam server.
-                delay: 100
+                delay: 200
 
             # Find plugins here:
             # https://github.com/8p/EightPointsGuzzleBundle#known-and-supported-plugins
