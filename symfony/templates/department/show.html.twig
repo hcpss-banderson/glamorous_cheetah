@@ -31,45 +31,26 @@
 		</div>
 	</section>
 	
-	<div id="render-cards">	
-		{{ render(controller('App\\Controller\\CardController::employee', {
-		    employee: department.head.employee,
-		    context: department,
-		    primary: true
-		})) }}
-	
-		{#
-    	{{ include('card/person.html.twig', {
-    		'grey': true, 
-    		'person': department.head.employee,
-    		'context': department,
-        }) }}
-        #}
-    	
-        {% for position in department.head.reports %}
+	<div id="render-cards">    	
+        {% for employee in reports %}
         	{{ render(controller('App\\Controller\\CardController::employee', {
-        	    employee: position.employee,
-        	    context: department
+        	    employee: employee,
+        	    context: department,
+        	    primary: loop.first
         	})) }}
-        
-        	{#        
-            {{ include('card/person.html.twig', {
-            	'grey': false, 
-            	'person': position.employee,
-            	'context': department,
-            }) }}
-            #}
         {% endfor %}
     </div>
     
     {% if department.children is not empty %}
-    	<p><strong>Sub departments:</strong>
-        	{% for related in department.children %}
-        		{% if not loop.first %}|{% endif %}
+    	<p><strong>Sub departments &darr;</strong></p>
+    	<ul>
+    	{% for related in department.children %}
+    		<li>
         		<a href="{{ path('department_show', {'slug': related.slug}) }}">
         		    {{ related.name|replace({' ': '&nbsp;'})|raw }}
         		</a>
-        	{% endfor %}
-    	</p>
+    		</li>
+    	{% endfor %}
+    	</ul>
     {% endif %}
 {% endblock %}

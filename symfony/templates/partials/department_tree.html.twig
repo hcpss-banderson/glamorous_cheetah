@@ -3,9 +3,9 @@
 	    {{ department.name }}
 	</a>
 		
-	{% if department.children|length > 0 %}
+	{% if department.children is defined and department.children|length > 0 %}
 		<ul >
-    	{% for child in department.children %}
+    	{% for child in department.children|sort((a,b) => a.name <=> b.name) %}
     	    {{ include('partials/department_tree.html.twig', { 'department': child }) }}
     	{% endfor %}
     	</ul>

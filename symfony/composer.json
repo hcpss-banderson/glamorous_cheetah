@@ -5,19 +5,20 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/mongodb-odm-bundle": "^4.1",
         "eightpoints/guzzle-bundle": "^7.6",
         "graphaware/neo4j-php-client": "^4.8",
-        "graphaware/neo4j-php-ogm": "@rc",
         "neo4j/neo4j-bundle": "^0.4.2",
+        "ruflin/elastica": "^5.3",
         "sensio/framework-extra-bundle": "^5.5",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.3.1",
+        "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
         "symfony/twig-bundle": "4.4.*",
-        "symfony/yaml": "4.4.*"
+        "symfony/yaml": "4.4.*",
+        "twig/extensions": "^1.5"
     },
     "require-dev": {
         "symfony/debug-bundle": "4.4.*",

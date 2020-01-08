@@ -16,7 +16,7 @@
 	</p>
 	
 	<ul class="tree">
-		{% for child in root.children %}
+		{% for child in root.children|sort((a,b) => a.name <=> b.name) %}
     	    {{ include('partials/department_tree.html.twig', { 'department': child }) }}
     	{% endfor %}
   	</ul>

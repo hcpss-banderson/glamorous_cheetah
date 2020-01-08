@@ -63,13 +63,14 @@
     </section>
     
     {% if results is iterable %}
-    	{% for result in results %}
-    		{% if class(result) == 'Department' %}
-    			{{ include('card/department.html.twig', {'department': result}) }}
-    		{% elseif class(result) == 'Employee' %}
-    			{{ include('card/person.html.twig', {'person': result}) }}
+    	{% for result in results %}    		
+    		{% if result.employee_id is defined %}
+    			{{ render(controller('App\\Controller\\CardController::employee', {
+            	    employee: result
+            	})) }}	
+    		{% else %}
+    		    {{ include('card/department.html.twig', {'department': result}) }}
     		{% endif %}
-
     	{% else %}
     		<h3>No results found</h3>
             <p>Can't find what you're looking for? Try our 

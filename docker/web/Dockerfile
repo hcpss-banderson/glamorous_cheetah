@@ -3,14 +3,8 @@ FROM banderson/symfony
 RUN apt-get update \
 	&& apt-get install -y \
 		php-bcmath \
-		php-pear \
-		php-dev \
 		zip \
-		unzip \
-	&& pecl install mongodb \
-	&& echo "extension=mongodb.so" >> /etc/php/7.2/mods-available/mongodb.ini \
-	&& ln -s /etc/php/7.2/mods-available/mongodb.ini /etc/php/7.2/apache2/conf.d/20-mongodb.ini \
-	&& ln -s /etc/php/7.2/mods-available/mongodb.ini /etc/php/7.2/cli/conf.d/20-mongodb.ini
+		unzip
 
 COPY docker/web/000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY docker/web/php.ini /etc/php/7.2/apache2/php.ini

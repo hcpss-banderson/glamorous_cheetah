@@ -1,7 +1,7 @@
 /symfony.sql
 /.env
 /.data
-/.node
+/.node*
 /.mongo
 .buildpath
 .project

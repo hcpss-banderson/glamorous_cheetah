@@ -2,4 +2,9 @@ neo4j:
     connections:
         default:
             # dsn: '%env(resolve:NEO4J_DEFAULT_CONNECTION_DSN)%'
-            dsn: 'bolt://graph:7687'
+            #dsn: 'bolt://graph:7687'
+            scheme: bolt
+            host: graph
+            port: 7687
+            username: '%env(NEO4J_AUTH_USERNAME)%'
+            password: '%env(NEO4J_AUTH_PASSWORD)%'

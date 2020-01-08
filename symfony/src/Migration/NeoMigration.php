@@ -116,7 +116,7 @@ class NeoMigration
                 $stack->push("
                     MATCH (e:Employee),(l:Location)
                     WHERE e.employee_id = {employee_id} AND l.code = {code}
-                    CREATE (e)-[:HAS_POSITION]->(p:Position {
+                    CREATE (e)-[:HAS_POSITION {primary: {primary}}]->(p:Position {
                         description: {description},
                         position_id: {position_id},
                         weight:      {weight}
@@ -127,6 +127,7 @@ class NeoMigration
                     'code'        => $locationCode,
                     'position_id' => $positionId,
                     'weight'      => $weight,
+                    'primary'     => $weight === 0,
                 ]);
 
                 // Create a relationship to the manager.

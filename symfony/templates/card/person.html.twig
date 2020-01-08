@@ -1,7 +1,7 @@
 {% extends 'card/card.html.twig' %}
 
 {% block card_name %}
-	{{ person.displayName }}
+	{{ person.display_name }}
 {% endblock %}
 
 {% block card_body %}
@@ -29,12 +29,12 @@
     {% endif %}
 
     {% if person.phone %}
-    	<p><strong>Phone:</strong> {{ person.phone }}</p>
+    	<p><strong>Phone:</strong> {{ person.phone|phone }}</p>
     {% endif %}
 
     <p>
     	<strong>Location:</strong>
-        {{ person.positions.first.location.name }}
+        {{ location.name }}
     	
     	{#
     	<a href="https://maps.google.com/?q={{ person.location.address|url_encode }}">

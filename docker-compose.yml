@@ -4,43 +4,31 @@ services:
       
   graph:
     image: neo4j
-    container_name: directory_graph
+    container_name: sym_directory_graph
     restart: always
     volumes:
-      - ./.node:/data
+      - ./.node_data:/data
+      - ./.node_logs:/logs
     ports:
       - 7474:7474
       - 7687:7687
     environment:
-      NEO4J_AUTH: none
+      NEO4J_AUTH: ${NEO4J_AUTH_USERNAME}/${NEO4J_AUTH_PASSWORD}
 
-  mongo:
-    image: mongo
-    container_name: directory_mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
-      MONGO_INITDB_DATABASE: symfony
-    volumes:
-      - ./.mongo:/data/db
-
-  mongo-express:
-    image: mongo-express
-    container_name: directory_express
-    restart: always
+  search:
+    container_name: sym_directory_search
+    image: elasticsearch:5
     ports:
-      - 8081:8081
+      - 9200:9200
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      - discovery.type=single-node
 
   web:
-    image: glamorous_cheetah
+    image: sym_glamorous_cheetah
     build:
       context: .
       dockerfile: ./docker/web/Dockerfile
-    container_name: directory_web
+    container_name: sym_directory_web
     restart: always
     volumes:
       - ./symfony:/var/www/symfony
@@ -48,3 +36,5 @@ services:
       - 9090:80
     environment:
       APP_ENV: dev
+      NEO4J_AUTH_USERNAME: ${NEO4J_AUTH_USERNAME}
+      NEO4J_AUTH_PASSWORD: ${NEO4J_AUTH_PASSWORD}
